@@ -4,7 +4,7 @@ Name: arptables_jf
 
 Epoch: 0
 Version: 0.0.8
-Release: 20%{?dist}
+Release: 23%{?dist}
 Source: %{name}-%{version}.tbz
 #Source1: Makefile
 #Source2: arptables.h
@@ -17,6 +17,8 @@ Patch2: arptables_jf-0.0.8-man.patch
 Patch3: arptables_jf-0.0.8-warnings.patch
 Patch4: arptables_jf-0.0.8-header.patch
 Patch5: arptables_jf-0.0.8-initscript.patch
+Patch6: arptables_jf-0.0.8-mangle.patch
+Patch7: arptables_jf-0.0.8-options.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -46,6 +48,8 @@ install this package.
 %patch3 -p1 -b .warnings
 %patch4 -p1 -b .header
 %patch5 -p1 -b .initscript
+%patch6 -p1 -b .mangle
+%patch7 -p1 -b .options
 
 %build
 make all LIBDIR=/%{_lib} 'COPT_FLAGS=%{optflags} -fno-strict-aliasing' %{_smp_mflags}
@@ -73,13 +77,22 @@ fi
 
 
 %changelog
+* Thu May 16 2013 Jiri Popelka <jpopelka@redhat.com> - 0:0.0.8-23
+- make option -x work together with -L (#963209)
+
+* Fri May 10 2013 Jiri Popelka <jpopelka@redhat.com> - 0:0.0.8-22
+- Apply the patch for #807315 this time
+
+* Thu May 09 2013 Jiri Popelka <jpopelka@redhat.com> - 0:0.0.8-21
+- No way to mangle an hardware address (#807315)
+
 * Thu May 27 2010 Jiri Skala <jskala@redhat.com> - 0:0.0.8-20
 - Resolves: #596149 - RPMdiff run failed - added -fno-strict-aliasing flag
 
 * Mon Apr 26 2010 Jiri Skala <jskala@redhat.com> - 0:0.0.8-19
 - Resolves: #576103 - init script LSB is not compliant (returned condrestart to Usage)
 
-* Tue Mar 24 2010 Jiri Skala <jskala@redhat.com> - 0:0.0.8-18
+* Wed Mar 24 2010 Jiri Skala <jskala@redhat.com> - 0:0.0.8-18
 - Resolves: #576103 - init script LSB is not compliant
 
 * Tue Jan 05 2010 Jiri Skala <jskala@redhat.com> - 0:0.0.8-17
